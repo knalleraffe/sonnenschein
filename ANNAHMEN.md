@@ -67,3 +67,17 @@ Alles davon lässt sich später leicht ändern.
 17. **Beobachtung zu Sonntagen:** Der Satz erscheint nur, wenn das Langsame an
     mindestens 2 der letzten 4 Sonntage der stärkste Wochenwert war — bei
     weniger Treffern wäre die Aussage zu dünn (N=1-Haltung).
+
+## Auftrag 2, Meilenstein 4 — Glossar
+
+18. **Fachlich bitte prüfen:** Alle Glossartexte sind bewusst vorsichtig und
+    einfach formuliert. Besonders prüfen solltest du: **Interferenz** (stark
+    vereinfacht auf „gegenseitiges Stören"), **Effektstärke** (ohne Formeln,
+    nur als Einordnung beschrieben) und **Serieller Positionseffekt**
+    (Begründung über Wiederholung/Frische ist die gängige, aber vereinfachte
+    Erklärung).
+19. **Verweise auf Spiele:** Einige „Warum das hier vorkommt"-Sätze verweisen
+    auf Merk- und Listen-Spiele, die es als Screens noch nicht gibt — sie
+    beschreiben den geplanten Zweck der Spielekarten im Dashboard.
+20. **Suche durchsucht** Begriff, Anriss und Erklärungstext (ohne
+    Groß-/Kleinschreibung).

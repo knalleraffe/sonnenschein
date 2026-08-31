@@ -4,15 +4,7 @@ import Dashboard from './screens/Dashboard'
 import Avatar from './screens/Avatar'
 import Playground from './screens/Playground'
 import Statistiken from './screens/Statistiken'
-
-/* Platzhalterseiten für Routen, die erst später gestaltet werden */
-function Platzhalter({ titel }: { titel: string }) {
-  return (
-    <div className="flex h-full items-center justify-center px-6 text-center">
-      <p className="text-sm text-ink-muted">[{titel} — folgt später]</p>
-    </div>
-  )
-}
+import Glossar from './screens/Glossar'
 
 /*
   Grundgerüst der App:
@@ -31,7 +23,7 @@ export default function App() {
             <Route path="/sonnenschein" element={<Avatar />} />
             <Route path="/playground" element={<Playground />} />
             <Route path="/statistiken" element={<Statistiken />} />
-            <Route path="/glossar" element={<Platzhalter titel="Glossar" />} />
+            <Route path="/glossar" element={<Glossar />} />
           </Routes>
         </main>
         <TabBar />
