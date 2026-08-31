@@ -40,3 +40,18 @@ Alles davon lässt sich später leicht ändern.
    `design/tokens.md` bzw. `src/styles/tokens.css` ergänzt.
 10. **Schließen-Kreuz:** Das Kreuz blendet die Karte vorerst sofort aus — die
     weiche Wegwisch-Animation kommt wie geplant in Meilenstein 5.
+
+## Meilenstein 3
+
+11. **Fünf Strahlen statt drei:** Im Screenshot sind drei Strahlen sichtbar,
+    die äußeren beiden sind vom Bildrand angeschnitten. Ich habe fünf Strahlen
+    angelegt (ray-1 bis ray-5); die äußeren zwei liegen im Vollbild außerhalb
+    des Bildes, tauchen aber in der kompakten Größe auf.
+12. **Gesichter der Stimmungen erfunden:** Nur „fröhlich" ist im Screenshot zu
+    sehen. Die anderen fünf Gesichter (neutral, müde, aufgeregt, nachdenklich,
+    traurig) habe ich passend zum Stil entworfen — auf der Playground-Seite
+    prüfbar und in `src/components/avatar/emotions.ts` leicht änderbar.
+13. **Vitalitäts-Regler im Playground:** Zusätzlich zu den Stimmungs-Knöpfen
+    gibt es dort einen Schieberegler, um die Vitalität (0–1) zu testen.
+14. **Farben der inneren Ringe und des Glanzlichts** habe ich aus dem
+    Screenshot nachgemessen (#FBBE58, #FBD48A, #FDF0C7).
