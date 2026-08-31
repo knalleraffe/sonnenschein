@@ -3,6 +3,7 @@ import TabBar from './components/ui/TabBar'
 import Dashboard from './screens/Dashboard'
 import Avatar from './screens/Avatar'
 import Playground from './screens/Playground'
+import Statistiken from './screens/Statistiken'
 
 /* Platzhalterseiten für Routen, die erst später gestaltet werden */
 function Platzhalter({ titel }: { titel: string }) {
@@ -29,7 +30,7 @@ export default function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/sonnenschein" element={<Avatar />} />
             <Route path="/playground" element={<Playground />} />
-            <Route path="/statistiken" element={<Platzhalter titel="Statistiken" />} />
+            <Route path="/statistiken" element={<Statistiken />} />
             <Route path="/glossar" element={<Platzhalter titel="Glossar" />} />
           </Routes>
         </main>
