@@ -1,0 +1,28 @@
+/*
+  Design-Tokens der App "Sonnenschein".
+  Alle Farben, Radien und Schatten leben hier — Komponenten
+  referenzieren ausschließlich diese Variablen, nie direkte Hex-Werte.
+  Quelle: design/tokens.md (Startwerte aus den Screenshots geschätzt).
+*/
+:root {
+  /* Sonne */
+  --sun-core: #fbb03b;
+  --sun-deep: #f59e1b;
+  --sun-light: #ffce6a;
+
+  /* Flächen */
+  --surface: #fffdf8;
+  --surface-card: #ffffff;
+  --cream: #fff4e0;
+
+  /* Text */
+  --ink: #1a1a1a;
+  --ink-muted: #8a8578;
+
+  /* Radien */
+  --radius-card: 28px;
+  --radius-pill: 999px;
+
+  /* Schatten */
+  --shadow-card: 0 2px 12px rgba(180, 120, 20, 0.08);
+}

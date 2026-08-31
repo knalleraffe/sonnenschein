@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/*
+  Tailwind-Theme: macht die Design-Tokens als Tailwind-Klassen nutzbar,
+  z. B. bg-sun-core, text-ink-muted, rounded-card.
+*/
+@theme {
+  --color-sun-core: var(--sun-core);
+  --color-sun-deep: var(--sun-deep);
+  --color-sun-light: var(--sun-light);
+  --color-surface: var(--surface);
+  --color-surface-card: var(--surface-card);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+
+  --radius-card: var(--radius-card);
+  --radius-pill: var(--radius-pill);
+
+  --shadow-card: var(--shadow-card);
+
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  /* Auf dem Desktop: dezenter warmer Hintergrund um den Telefonrahmen */
+  background: #f3efe6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tastaturfokus bleibt überall sichtbar (Barrierefreiheit) */
+:focus-visible {
+  outline: 2px solid var(--sun-deep);
+  outline-offset: 2px;
+}
