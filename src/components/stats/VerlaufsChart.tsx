@@ -1,22 +1,28 @@
-import { useMemo } from 'react'
+import { useMemo, useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import Card from '../ui/Card'
 import { modi, modusListe } from '../../data/modes'
 import type { TagesEintrag } from '../../data/mock'
 import { glatterPfad, flaechenPfad, kurzDatum, type Punkt } from '../../lib/chart'
+import { spring, zeichnen, flaecheEinblenden } from '../../lib/motion'
 
 /*
-  Verlaufs-Karte: Liniendiagramm über den gewählten Zeitraum,
-  zwei weich interpolierte Linien mit Farbverlauf darunter.
-  Handgebautes SVG — die Scrubber-Interaktion folgt in Meilenstein 3.
+  Verlaufs-Karte: zwei weich interpolierte Linien mit Farbverlauf darunter.
+  Die Linien zeichnen sich beim Aufbau (pathLength 0 → 1, 900 ms),
+  die Flächen blenden 200 ms verzögert nach.
+  Scrubber: Mit dem Finger waagerecht ziehen — eine dünne Linie rastet
+  auf dem nächstgelegenen Tag ein, darüber federt eine Blase mit
+  Datum und beiden Werten (läuft am Rand nicht heraus).
 */
 
-export const CHART_BREITE = 345
-export const CHART_HOEHE = 170
-const RAND = { oben: 12, unten: 26, links: 6, rechts: 6 }
+const CHART_BREITE = 345
+const CHART_HOEHE = 208
+const RAND = { oben: 54, unten: 26, links: 6, rechts: 6 }
 const GRUNDLINIE = CHART_HOEHE - RAND.unten
+const BLASE_BREITE = 104
+const BLASE_HOEHE = 38
 
-/** Rechnet die Einträge in Diagramm-Koordinaten um (x nach Datum, y nach Wert 0–100) */
-export function berechnePunkte(eintraege: TagesEintrag[]) {
+function berechnePunkte(eintraege: TagesEintrag[]) {
   const innenBreite = CHART_BREITE - RAND.links - RAND.rechts
   const innenHoehe = GRUNDLINIE - RAND.oben
   const erster = new Date(eintraege[0].datum).getTime()
@@ -54,10 +60,45 @@ function Legende() {
   )
 }
 
-export default function VerlaufsChart({ eintraege }: { eintraege: TagesEintrag[] }) {
+export default function VerlaufsChart({
+  eintraege,
+  zeitraum,
+}: {
+  eintraege: TagesEintrag[]
+  zeitraum: string
+}) {
+  const reduziert = useReducedMotion()
+  const svgRef = useRef<SVGSVGElement>(null)
+  const [gewaehlt, setGewaehlt] = useState<number | null>(null)
+
   const punkte = useMemo(() => berechnePunkte(eintraege), [eintraege])
   const wenigePunkte = eintraege.length <= 31
   const mitte = eintraege[Math.floor(eintraege.length / 2)]
+
+  // Auswahl absichern, falls der Zeitraum weniger Tage hat
+  const index = gewaehlt === null ? null : Math.min(gewaehlt, eintraege.length - 1)
+  const aktiverTag = index === null ? null : eintraege[index]
+  const aktivX = index === null ? 0 : punkte.langsam[index].x
+  const blaseX = Math.min(Math.max(aktivX - BLASE_BREITE / 2, 2), CHART_BREITE - BLASE_BREITE - 2)
+  const feder = reduziert ? { duration: 0 } : spring
+
+  /** Fingerposition → nächstgelegener Tag */
+  function waehleTag(clientX: number) {
+    const svg = svgRef.current
+    if (!svg) return
+    const rect = svg.getBoundingClientRect()
+    const x = ((clientX - rect.left) / rect.width) * CHART_BREITE
+    let bester = 0
+    let abstand = Infinity
+    punkte.langsam.forEach((p, i) => {
+      const d = Math.abs(p.x - x)
+      if (d < abstand) {
+        abstand = d
+        bester = i
+      }
+    })
+    setGewaehlt(bester)
+  }
 
   return (
     <Card className="p-5">
@@ -66,7 +107,19 @@ export default function VerlaufsChart({ eintraege }: { eintraege: TagesEintrag[]
         <Legende />
       </div>
 
-      <svg viewBox={`0 0 ${CHART_BREITE} ${CHART_HOEHE}`} className="mt-3 w-full">
+      <svg
+        ref={svgRef}
+        viewBox={`0 0 ${CHART_BREITE} ${CHART_HOEHE}`}
+        className="mt-3 w-full select-none"
+        style={{ touchAction: 'pan-y' }}
+        onPointerDown={(e) => {
+          e.currentTarget.setPointerCapture(e.pointerId)
+          waehleTag(e.clientX)
+        }}
+        onPointerMove={(e) => {
+          if (e.buttons > 0) waehleTag(e.clientX)
+        }}
+      >
         <defs>
           <linearGradient id="grad-langsam" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor={modi.langsam.farbe} stopOpacity="0.22" />
@@ -78,38 +131,110 @@ export default function VerlaufsChart({ eintraege }: { eintraege: TagesEintrag[]
           </linearGradient>
         </defs>
 
-        {/* Flächen unter den Linien */}
-        <path d={flaechenPfad(punkte.langsam, GRUNDLINIE)} fill="url(#grad-langsam)" />
-        <path d={flaechenPfad(punkte.schnell, GRUNDLINIE)} fill="url(#grad-schnell)" />
+        {/* Flächen blenden verzögert nach; key erzwingt Neuaufbau je Zeitraum */}
+        <motion.path
+          key={`fl-${zeitraum}`}
+          d={flaechenPfad(punkte.langsam, GRUNDLINIE)}
+          fill="url(#grad-langsam)"
+          initial={reduziert ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={flaecheEinblenden}
+        />
+        <motion.path
+          key={`fs-${zeitraum}`}
+          d={flaechenPfad(punkte.schnell, GRUNDLINIE)}
+          fill="url(#grad-schnell)"
+          initial={reduziert ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={flaecheEinblenden}
+        />
 
-        {/* Linien — unterschiedliche Stärke zur Unterscheidung ohne Farbe */}
-        <path
+        {/* Linien zeichnen sich über pathLength */}
+        <motion.path
+          key={`ll-${zeitraum}`}
           d={glatterPfad(punkte.langsam)}
           fill="none"
           stroke={modi.langsam.farbe}
           strokeWidth={modi.langsam.linienStaerke}
           strokeLinecap="round"
+          initial={reduziert ? false : { pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={zeichnen}
         />
-        <path
+        <motion.path
+          key={`ls-${zeitraum}`}
           d={glatterPfad(punkte.schnell)}
           fill="none"
           stroke={modi.schnell.farbe}
           strokeWidth={modi.schnell.linienStaerke}
           strokeLinecap="round"
+          initial={reduziert ? false : { pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={zeichnen}
         />
 
-        {/* Datenpunkte nur bei kurzen Zeiträumen (Quadrat/Kreis je Modus) */}
+        {/* Datenpunkte nur bei kurzen Zeiträumen */}
         {wenigePunkte &&
           punkte.langsam.map((p, i) => (
-            <rect key={`l-${i}`} x={p.x - 3} y={p.y - 3} width="6" height="6" fill={modi.langsam.farbe} />
+            <rect key={`pl-${i}`} x={p.x - 3} y={p.y - 3} width="6" height="6" fill={modi.langsam.farbe} />
           ))}
         {wenigePunkte &&
           punkte.schnell.map((p, i) => (
-            <circle key={`s-${i}`} cx={p.x} cy={p.y} r="3" fill={modi.schnell.farbe} />
+            <circle key={`ps-${i}`} cx={p.x} cy={p.y} r="3" fill={modi.schnell.farbe} />
           ))}
 
+        {/* Scrubber: Linie, Marker und Blase folgen federnd */}
+        {aktiverTag && index !== null && (
+          <g>
+            <motion.g animate={{ x: aktivX }} transition={feder}>
+              <line
+                x1="0"
+                y1={BLASE_HOEHE + 8}
+                x2="0"
+                y2={GRUNDLINIE}
+                stroke="var(--ink-muted)"
+                strokeWidth="1"
+              />
+            </motion.g>
+            <motion.g
+              animate={{ x: punkte.langsam[index].x, y: punkte.langsam[index].y }}
+              transition={feder}
+            >
+              <rect x="-4.5" y="-4.5" width="9" height="9" fill={modi.langsam.farbe} stroke="#fff" strokeWidth="1.5" />
+            </motion.g>
+            <motion.g
+              animate={{ x: punkte.schnell[index].x, y: punkte.schnell[index].y }}
+              transition={feder}
+            >
+              <circle r="5" fill={modi.schnell.farbe} stroke="#fff" strokeWidth="1.5" />
+            </motion.g>
+            {/* Blase: stößt am Rand an, statt herauszulaufen */}
+            <motion.g animate={{ x: blaseX }} transition={feder}>
+              <rect
+                width={BLASE_BREITE}
+                height={BLASE_HOEHE}
+                rx="12"
+                fill="var(--surface-card)"
+                style={{ filter: 'drop-shadow(0 2px 8px rgba(180,120,20,0.18))' }}
+              />
+              <text x={BLASE_BREITE / 2} y="15" textAnchor="middle" fontSize="10" fill="var(--ink-muted)">
+                {kurzDatum(aktiverTag.datum)}
+              </text>
+              <text x={BLASE_BREITE / 2} y="30" textAnchor="middle" fontSize="12" fontWeight="700">
+                <tspan fill={modi.langsam.farbe}>{aktiverTag.wertLangsam}</tspan>
+                <tspan fill="var(--ink-muted)" dx="6">
+                  ·
+                </tspan>
+                <tspan fill={modi.schnell.farbe} dx="6">
+                  {aktiverTag.wertSchnell}
+                </tspan>
+              </text>
+            </motion.g>
+          </g>
+        )}
+
         {/* Datumsbeschriftung: Anfang, Mitte, Ende */}
-        <g fill="var(--ink-muted)" fontSize="10" fontFamily="inherit">
+        <g fill="var(--ink-muted)" fontSize="10">
           <text x={RAND.links} y={CHART_HOEHE - 8}>
             {kurzDatum(eintraege[0].datum)}
           </text>

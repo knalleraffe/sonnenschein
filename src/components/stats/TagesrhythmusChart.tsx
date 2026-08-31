@@ -1,12 +1,14 @@
+import { motion, useReducedMotion } from 'motion/react'
 import Card from '../ui/Card'
 import { modi } from '../../data/modes'
 import type { Tageszeit } from '../../data/mock'
 import type { ModusWerte } from '../../data/mock'
+import { springSoft } from '../../lib/motion'
 
 /*
   Tagesrhythmus: Balkendiagramm in vier Blöcken (Morgen bis Abend).
-  Das Langsame als breiter Balken, das Schnelle als schmaler —
-  so bleiben die Modi auch ohne Farbe unterscheidbar.
+  Die Balken wachsen aus der Grundlinie, versetzt um 30 ms —
+  animiert wird nur transform (scaleY), nie die Höhe selbst.
 */
 
 const BREITE = 345
@@ -14,6 +16,37 @@ const HOEHE = 150
 const RAND_UNTEN = 22
 const RAND_OBEN = 14
 const GRUNDLINIE = HOEHE - RAND_UNTEN
+const MAX_HOEHE = GRUNDLINIE - RAND_OBEN
+
+function Balken({
+  x,
+  breite,
+  wert,
+  farbe,
+  verzoegerung,
+}: {
+  x: number
+  breite: number
+  wert: number
+  farbe: string
+  verzoegerung: number
+}) {
+  const reduziert = useReducedMotion()
+  return (
+    <motion.rect
+      x={x}
+      y={RAND_OBEN}
+      width={breite}
+      height={MAX_HOEHE}
+      rx="5"
+      fill={farbe}
+      style={{ transformBox: 'fill-box', transformOrigin: 'center bottom' }}
+      initial={reduziert ? false : { scaleY: 0 }}
+      animate={{ scaleY: Math.max(0.04, wert / 100) }}
+      transition={reduziert ? { duration: 0 } : { ...springSoft, delay: verzoegerung }}
+    />
+  )
+}
 
 export default function TagesrhythmusChart({
   bloecke,
@@ -23,7 +56,6 @@ export default function TagesrhythmusChart({
   text: string
 }) {
   const blockBreite = BREITE / bloecke.length
-  const hoeheFuer = (wert: number) => ((GRUNDLINIE - RAND_OBEN) * wert) / 100
 
   return (
     <Card className="p-5">
@@ -32,27 +64,22 @@ export default function TagesrhythmusChart({
       <svg viewBox={`0 0 ${BREITE} ${HOEHE}`} className="mt-3 w-full">
         {bloecke.map((block, i) => {
           const mitteX = i * blockBreite + blockBreite / 2
-          const hLangsam = hoeheFuer(block.werte.langsam)
-          const hSchnell = hoeheFuer(block.werte.schnell)
           return (
             <g key={block.id}>
-              {/* Elefanten-Modus: breiter Balken */}
-              <rect
+              {/* Elefanten-Modus: breiter Balken, Hasen-Modus: schmaler */}
+              <Balken
                 x={mitteX - 21}
-                y={GRUNDLINIE - hLangsam}
-                width="18"
-                height={hLangsam}
-                rx="5"
-                fill={modi.langsam.farbe}
+                breite={18}
+                wert={block.werte.langsam}
+                farbe={modi.langsam.farbe}
+                verzoegerung={i * 2 * 0.03}
               />
-              {/* Hasen-Modus: schmaler Balken */}
-              <rect
+              <Balken
                 x={mitteX + 3}
-                y={GRUNDLINIE - hSchnell}
-                width="11"
-                height={hSchnell}
-                rx="5"
-                fill={modi.schnell.farbe}
+                breite={11}
+                wert={block.werte.schnell}
+                farbe={modi.schnell.farbe}
+                verzoegerung={(i * 2 + 1) * 0.03}
               />
               <text
                 x={mitteX}

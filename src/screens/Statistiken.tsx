@@ -35,7 +35,7 @@ export default function Statistiken() {
 
       <div className="mt-5 flex flex-col gap-4">
         <BalanceCard balance={balance} />
-        <VerlaufsChart eintraege={eintraege} />
+        <VerlaufsChart eintraege={eintraege} zeitraum={zeitraum} />
         <TagesrhythmusChart bloecke={rhythmus.bloecke} text={rhythmus.text} />
         <BewegungsCard vergleich={bewegung} />
 

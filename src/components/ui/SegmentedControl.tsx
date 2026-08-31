@@ -1,6 +1,11 @@
+import { useId } from 'react'
+import { motion } from 'motion/react'
+import { spring, springTap, tap } from '../../lib/motion'
+
 /*
   Segmented Control (z. B. „7 Tage / 30 Tage / Alles").
-  Das Gleiten der aktiven Pille kommt in Meilenstein 3 (Animation).
+  Die aktive Pille GLEITET zwischen den Positionen (layoutId),
+  sie blendet nie aus und woanders wieder ein.
 */
 interface Option<T extends string> {
   id: T
@@ -16,19 +21,30 @@ export default function SegmentedControl<T extends string>({
   wert: T
   onChange: (neu: T) => void
 }) {
+  const gruppenId = useId()
+
   return (
     <div className="flex rounded-pill bg-cream p-1">
       {optionen.map((option) => (
-        <button
+        <motion.button
           key={option.id}
           type="button"
           onClick={() => onChange(option.id)}
-          className={`flex-1 rounded-pill px-4 py-2 text-[13px] font-semibold transition-colors ${
-            wert === option.id ? 'bg-surface-card text-ink shadow-card' : 'text-ink-muted'
+          whileTap={tap}
+          transition={springTap}
+          className={`relative flex-1 rounded-pill px-4 py-2 text-[13px] font-semibold transition-colors ${
+            wert === option.id ? 'text-ink' : 'text-ink-muted'
           }`}
         >
-          {option.label}
-        </button>
+          {wert === option.id && (
+            <motion.span
+              layoutId={`${gruppenId}-aktive-pille`}
+              transition={spring}
+              className="absolute inset-0 rounded-pill bg-surface-card shadow-card"
+            />
+          )}
+          <span className="relative z-10">{option.label}</span>
+        </motion.button>
       ))}
     </div>
   )

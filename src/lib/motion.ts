@@ -29,6 +29,15 @@ export const springTap = {
 /** Standard-Kurve, wenn eine Kurve statt Feder nötig ist */
 export const easeStandard = [0.32, 0.72, 0, 1] as const
 
+/** Diagrammlinien zeichnen sich (einzige erlaubte längere Animation) */
+export const zeichnen = { duration: 0.9, ease: easeStandard } as const
+
+/** Flächen unter Diagrammlinien blenden verzögert nach */
+export const flaecheEinblenden = { duration: 0.4, delay: 0.2, ease: easeStandard } as const
+
+/** Große Zahlen zählen in ~700 ms hoch */
+export const zaehlen = { duration: 0.7, ease: easeStandard } as const
+
 /** whileTap-Preset für jedes tippbare Element */
 export const tap = {
   scale: 0.96,
