@@ -19,6 +19,10 @@
   --ink: #1a1a1a;
   --ink-muted: #8a8578;
 
+  /* Modi (Statistiken): das Langsame gedeckt warm-braun, das Schnelle im Systemorange */
+  --mode-slow: #8a6a4f;
+  --mode-fast: var(--sun-deep);
+
   /* Radien */
   --radius-card: 28px;
   --radius-pill: 999px;

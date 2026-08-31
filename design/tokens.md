@@ -18,6 +18,8 @@ sie werden in `src/styles/tokens.css` übernommen.
 | --cream        | #FFF4E0                       | cremefarbene Flächen             |
 | --ink          | #1A1A1A                       | Text                             |
 | --ink-muted    | #8A8578                       | gedämpfter Text                  |
+| --mode-slow    | #8A6A4F                       | Elefanten-Modus (Diagramme)      |
+| --mode-fast    | var(--sun-deep)               | Hasen-Modus (Diagramme)          |
 
 ## Radien
 

@@ -55,3 +55,15 @@ Alles davon lässt sich später leicht ändern.
     gibt es dort einen Schieberegler, um die Vitalität (0–1) zu testen.
 14. **Farben der inneren Ringe und des Glanzlichts** habe ich aus dem
     Screenshot nachgemessen (#FBBE58, #FBD48A, #FDF0C7).
+
+## Auftrag 2, Meilenstein 1
+
+15. **Farbe Elefanten-Modus:** Für das Langsame habe ich den warmen Braunton
+    #8A6A4F gewählt (Token `--mode-slow`), das Schnelle nutzt das
+    System-Orange `--sun-deep`. Zusätzlich unterscheiden sich die Modi über
+    Linienstärke (dick/dünn) und Punktform (Quadrat/Kreis).
+16. **Datenlücken:** Die 3–4 Tage ohne Eintrag liegen an festen Positionen
+    (Tag 10, 24, 25 und 45 der 60 Tage) — in `src/data/mock.ts` änderbar.
+17. **Beobachtung zu Sonntagen:** Der Satz erscheint nur, wenn das Langsame an
+    mindestens 2 der letzten 4 Sonntage der stärkste Wochenwert war — bei
+    weniger Treffern wäre die Aussage zu dünn (N=1-Haltung).
