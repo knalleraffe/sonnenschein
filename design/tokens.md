@@ -32,6 +32,14 @@ sie werden in `src/styles/tokens.css` übernommen.
 | ------------- | --------------------------------- |
 | --shadow-card | 0 2px 12px rgba(180,120,20,0.08)  |
 
+## Verläufe (aus Frame.jpg nachgemessen)
+
+| Token         | Wert                                                      | Verwendung        |
+| ------------- | --------------------------------------------------------- | ----------------- |
+| --grad-header | linear-gradient(180deg, #FFF8E1, #FBE3AD 45%, #F6C364)    | Kopfbereich       |
+| --grad-points | linear-gradient(180deg, #FFE3A9, #FFFFFF 62%)             | Punktekarte       |
+| --grad-avatar | linear-gradient(180deg, var(--sun-light), var(--surface)) | Avatar-Hintergrund|
+
 ## Basis-Frame
 
 393 × 852 px (iPhone), auf Mobil optimiert, am Desktop im Telefonrahmen zentriert.

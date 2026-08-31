@@ -24,3 +24,19 @@ Alles davon lässt sich später leicht ändern.
 5. **Node.js installiert:** Auf dem Rechner war kein Node.js vorhanden. Ich
    habe es lokal im Benutzerordner installiert (`~/.local/node`), ohne
    Admin-Rechte.
+
+## Meilenstein 2
+
+6. **Tacho-Symbol:** Das bunte Tacho-Bild in der Stimmungscheck-Karte habe ich
+   als einfache Grafik nachgebaut. Wenn du das Original als Bild oder SVG
+   lieferst, tausche ich es aus.
+7. **Spielnamen unbekannt:** Die Spielkarten sind im Screenshot abgeschnitten.
+   Die vier Karten tragen deshalb die Markierungen `[SPIEL 1]` bis `[SPIEL 4]`
+   (in `src/data/mock.ts` änderbar). Auch die Höhe der Karten ist geschätzt.
+8. **Flammen-Symbol:** Das 🔥 im Serien-Badge ist als Emoji umgesetzt, da es im
+   Design so aussieht.
+9. **Verlaufsfarben nachgemessen:** Die Verläufe von Kopfbereich und
+   Punktekarte habe ich aus dem Screenshot abgelesen und als Tokens in
+   `design/tokens.md` bzw. `src/styles/tokens.css` ergänzt.
+10. **Schließen-Kreuz:** Das Kreuz blendet die Karte vorerst sofort aus — die
+    weiche Wegwisch-Animation kommt wie geplant in Meilenstein 5.
