@@ -37,8 +37,112 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Tastaturfokus bleibt überall sichtbar (Barrierefreiheit) */
-:focus-visible {
+/* Keine Scrollbalken — gescrollt wird weiterhin mit Finger, Maus und Tastatur */
+* {
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tastaturfokus bleibt überall sichtbar (Barrierefreiheit).
+   .ist-fokus und .ist-gedrueckt erzwingen Fokus und Gedrückt für die
+   Konzeptseite (/konzept) – die App setzt sie nie. */
+:focus-visible,
+.ist-fokus {
   outline: 2px solid var(--sun-deep);
   outline-offset: 2px;
 }
+
+.sheet-range {
+  height: 6px;
+  appearance: none;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    #ffba3a 0%,
+    #ffba3a var(--range-progress),
+    #dddddd var(--range-progress),
+    #dddddd 100%
+  );
+}
+
+.sheet-range::-webkit-slider-thumb {
+  width: 40px;
+  height: 24px;
+  appearance: none;
+  border: 0.5px solid #d6d6d6;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 0.5px 4px rgba(0, 0, 0, 0.12), 0 6px 13px rgba(0, 0, 0, 0.12);
+}
+
+.sheet-range::-moz-range-thumb {
+  width: 40px;
+  height: 24px;
+  border: 0.5px solid #d6d6d6;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 0.5px 4px rgba(0, 0, 0, 0.12), 0 6px 13px rgba(0, 0, 0, 0.12);
+}
+
+.sheet-primary {
+  background: linear-gradient(90deg, var(--sheet-primary-start), var(--sheet-primary-end));
+}
+
+.sheet-secondary {
+  background: var(--sheet-secondary);
+}
+
+.sheet-primary,
+.sheet-secondary {
+  transition: transform 0.12s ease-out;
+}
+
+.sheet-primary:active,
+.sheet-secondary:active,
+.sheet-primary.ist-gedrueckt,
+.sheet-secondary.ist-gedrueckt {
+  transform: scale(0.97);
+}
+
+@keyframes sheet-stagger {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sheet-content > * > * {
+  animation: sheet-stagger 0.45s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+.sheet-content > * > :nth-child(2) {
+  animation-delay: 60ms;
+}
+
+.sheet-content > * > :nth-child(3) {
+  animation-delay: 120ms;
+}
+
+.sheet-content > * > :nth-child(4) {
+  animation-delay: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet-content > * > * {
+    animation-name: sheet-stagger-reduced;
+    animation-duration: 0.2s;
+  }
+}
+
+@keyframes sheet-stagger-reduced {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+

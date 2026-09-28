@@ -1,0 +1,5 @@
+PLATZHALTER – noch kein Link.
+
+Das Projekt hat noch kein GitHub-Repository. Sobald es eines gibt, wird der Prototyp
+über GitHub Pages veröffentlicht, und hier steht dann der Link, zum Beispiel:
+https://BENUTZERNAME.github.io/sonnenschein/

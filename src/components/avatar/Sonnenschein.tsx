@@ -11,7 +11,8 @@ interface SonnenscheinProps {
   emotion?: Emotion
   /** 0..1 — steuert Sättigung, Strahlenlänge/-deckkraft und Glanzlicht */
   vitality?: number
-  size?: 'full' | 'compact'
+  /** full: ganzer Screen; compact: Ausschnitt; kopf: breiter Ausschnitt mit Körperbogen (Startseite, wie Figma 180:37) */
+  size?: 'full' | 'compact' | 'kopf'
 }
 
 /* Mittelpunkt des Sonnenkörpers (liegt weit unter dem Bildrand) */
@@ -36,7 +37,7 @@ export default function Sonnenschein({
 
   return (
     <svg
-      viewBox={size === 'full' ? '0 0 393 852' : '0 200 393 340'}
+      viewBox={size === 'full' ? '0 0 393 852' : size === 'kopf' ? '-195 200 783 330' : '0 200 393 340'}
       preserveAspectRatio="xMidYMax slice"
       className="h-full w-full"
       role="img"

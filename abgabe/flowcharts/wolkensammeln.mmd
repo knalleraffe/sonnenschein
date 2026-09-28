@@ -1,0 +1,36 @@
+%% Wolkensammeln – abgeleitet aus den Phasen in src/screens/Wolkensammeln.tsx und src/games/wolkensammeln/session.ts, staircase.ts, config.ts
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Inter Variable, Inter, Arial, sans-serif", "fontSize": "14px", "primaryColor": "#ffffff", "primaryBorderColor": "#ffba3a", "primaryTextColor": "#000000", "lineColor": "#6a6a6a", "edgeLabelBackground": "#fff9ed", "tertiaryColor": "#fff9ed"}, "flowchart": {"nodeSpacing": 28, "rankSpacing": 32}}}%%
+flowchart TD
+    E([Erklärungs-Sheet]) -->|Abbrechen| AUS([Startseite])
+    E -->|Spiel starten| D0{Proberunde<br/>schon gesehen?}
+    D0 -->|nein| PR["Proberunde<br/>1 Durchgang, 3 Wolken, zählt nicht"]
+    PR -->|fertig oder „Überspringen“| PB[Sheet „Proberunde beendet“]
+    PB -->|Noch einmal üben| PR
+    PB -->|Weiter| PV
+    D0 -->|ja| PV[Puls-Sheet „Bevor es losgeht“]
+    PV --> CD[Countdown 3 · 2 · 1]
+    CD --> R["Ruhephase 1,1 s"]
+    R --> V["Vorführen: Wolken leuchten<br/>nacheinander auf"]
+    V --> EIN[Eingabe: Wolken antippen]
+    EIN --> D1{Wolke dabei?}
+    D1 -->|nein| F["Fehler<br/>fehlende Wolken leuchten auf"]
+    D1 -->|ja, noch nicht alle| EIN
+    D1 -->|ja, alle getippt| OK["Richtig<br/>Licht, nach 2 richtigen +1 Wolke"]
+    EIN -->|10 s bzw. 6 s ohne Tipp| F
+    F --> D2{3 Fehler<br/>in Folge?}
+    D2 -->|ja| BP[Sheet „Bewegungspause“]
+    BP -->|Ich habe mich bewegt| PN[Puls-Sheet „Bevor es weitergeht“]
+    BP -->|Ohne Bewegung fortfahren| D3
+    PN --> D3
+    D2 -->|nein| D3
+    OK --> D3{20 Durchgänge<br/>gespielt?}
+    D3 -->|nein, nächster Durchgang| R
+    D3 -->|ja| ERG([Ergebnis-Sheet])
+    ERG -->|Dashboard oder Statistiken| AUS
+
+    classDef entscheidung fill:#fff9ed,stroke:#ffba3a,color:#000000
+    classDef ziel fill:#ffba3a,stroke:#ffba3a,color:#000000
+    classDef fehler fill:#ffffff,stroke:#6a6a6a,color:#000000
+    class D0,D1,D2,D3 entscheidung
+    class E,ERG ziel
+    class F fehler

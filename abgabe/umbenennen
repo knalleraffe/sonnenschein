@@ -1,0 +1,33 @@
+#!/bin/sh
+# Benennt alle Abgabe-Dateien nach dem Schema aus abgabe/abgabe.config.ts um.
+#
+# So geht's:
+#   1. In abgabe/abgabe.config.ts bei DATEINAME das Schema von Herrn Finkbeiner eintragen,
+#      z. B.  export const DATEINAME = 'Nachname_Vorname_Sonnenschein'
+#   2. Im Terminal im Projektordner:  sh abgabe/umbenennen
+#
+# Umbenannt werden: {alt}_konzept.pdf, {alt}_video.mp4 und {alt}_entwurfsmaterial.zip
+# (falls vorhanden). Es wird nichts gelöscht.
+
+cd "$(dirname "$0")" || exit 1
+
+NEU=$(sed -n "s/^export const DATEINAME = '\(.*\)'.*/\1/p" abgabe.config.ts)
+if [ -z "$NEU" ]; then
+  echo "DATEINAME in abgabe.config.ts nicht gefunden."
+  exit 1
+fi
+if [ "$NEU" = "PLATZHALTER" ]; then
+  echo "Bitte zuerst DATEINAME in abgabe/abgabe.config.ts eintragen (steht noch auf PLATZHALTER)."
+  exit 1
+fi
+
+for endung in _konzept.pdf _video.mp4 _entwurfsmaterial.zip; do
+  for datei in *"$endung"; do
+    [ -e "$datei" ] || continue
+    ziel="${NEU}${endung}"
+    if [ "$datei" != "$ziel" ]; then
+      mv -n "$datei" "$ziel" && echo "$datei  →  $ziel"
+    fi
+  done
+done
+echo "Fertig."

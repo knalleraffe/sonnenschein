@@ -1,0 +1,35 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="688.862" height="1072.26" viewBox="0 0 688.862 1072.26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 3">
+<ellipse id="Ellipse 3" cx="342.402" cy="529.136" rx="282.554" ry="243.941" fill="#FFBA3A"/>
+<path id="Vector 7" d="M401.222 341.133C397.975 334.036 388.809 325.183 379.571 324.894C370.333 324.606 359.483 333.796 356.476 341.133" stroke="black" stroke-width="4.76343" stroke-linecap="round"/>
+<path id="Vector 8" d="M327.606 341.133C324.359 334.036 315.193 325.183 305.955 324.894C296.717 324.606 285.867 333.796 282.86 341.133" stroke="black" stroke-width="4.76343" stroke-linecap="round"/>
+<ellipse id="Ellipse 5" cx="442.359" cy="325.792" rx="31.3412" ry="12.2343" transform="rotate(20.2038 442.359 325.792)" fill="#FFECBB"/>
+<path id="Polygon 11" d="M340.065 0L417.831 252.897H262.299L340.065 0Z" fill="url(#paint0_linear_0_7)"/>
+<path id="Polygon 7" d="M652.531 227.32L604.24 354.162L541.315 305.113L652.531 227.32Z" fill="#FFBA3A"/>
+<path id="Polygon 2" d="M339.221 66.644L393.78 244.068H284.663L339.221 66.644Z" fill="#FFBA3A"/>
+<path id="Polygon 10" d="M533.917 85.3444L522.384 294.092L407.087 251.545L533.917 85.3444Z" fill="url(#paint1_linear_0_7)"/>
+<path id="Polygon 3" d="M518.959 129.672L510.441 283.835L425.292 252.414L518.959 129.672Z" fill="#FFBA3A"/>
+<path id="Polygon 4" d="M539.736 963.572L439.902 819.207L538.266 788.055L539.736 963.572Z" fill="#FFBA3A"/>
+<path id="Polygon 8" d="M345.131 1072.26L261.254 800.218L429.007 800.218L345.131 1072.26Z" fill="#FFECBB"/>
+<path id="Polygon 5" d="M345.362 973.702L296.594 815.106L394.131 815.106L345.362 973.702Z" fill="#FFBA3A"/>
+<path id="Polygon 6" d="M128.835 997.484L140.51 786.174L257.222 829.244L128.835 997.484Z" fill="#FFBA3A"/>
+<ellipse id="Ellipse 4" cx="347.093" cy="607.804" rx="124.858" ry="205.69" transform="rotate(90 347.093 607.804)" fill="#FFCA67"/>
+<path id="Polygon 1" d="M32.4913 236.256L152.587 299.485L96.3105 356.04L32.4913 236.256Z" fill="#FFBA3A"/>
+<path id="Polygon 9" d="M166.227 97.0656L272.634 250.935L167.794 284.138L166.227 97.0656Z" fill="url(#paint2_linear_0_7)"/>
+<path id="Polygon 1_2" d="M179.723 139.249L256.921 250.88L180.86 274.968L179.723 139.249Z" fill="#FFBA3A"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_7" x1="340.065" y1="0" x2="340.065" y2="337.196" gradientUnits="userSpaceOnUse">
+<stop offset="0.416667" stop-color="#FFECBB"/>
+<stop offset="0.57527" stop-color="#FFECBB" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_7" x1="533.917" y1="85.3444" x2="441.675" y2="335.309" gradientUnits="userSpaceOnUse">
+<stop offset="0.416667" stop-color="#FFECBB"/>
+<stop offset="0.57527" stop-color="#FFECBB" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint2_linear_0_7" x1="166.227" y1="97.0656" x2="238.21" y2="324.36" gradientUnits="userSpaceOnUse">
+<stop offset="0.416667" stop-color="#FFECBB"/>
+<stop offset="0.57527" stop-color="#FFECBB" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

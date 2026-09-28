@@ -39,7 +39,9 @@ export default function SegmentedControl<T extends string>({
           {wert === option.id && (
             <motion.span
               layoutId={`${gruppenId}-aktive-pille`}
-              transition={spring}
+              transition={{ ...spring, duration: 0.35 }}
+              /* Während des Gleitens weitet sich die Pille kurz um 4 % */
+              animate={{ scaleX: [1, 1.04, 1] }}
               className="absolute inset-0 rounded-pill bg-surface-card shadow-card"
             />
           )}

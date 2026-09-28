@@ -7,7 +7,8 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    {/* Unterordner der Veröffentlichung (GitHub Pages), lokal leer */}
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || undefined}>
       <App />
     </BrowserRouter>
   </StrictMode>,

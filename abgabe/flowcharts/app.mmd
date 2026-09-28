@@ -1,0 +1,28 @@
+%% App-Ablauf – abgeleitet aus src/App.tsx, src/einfuehrung/Startsequenz.tsx, src/lib/einstellungen.ts und den Routen
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Inter Variable, Inter, Arial, sans-serif", "fontSize": "14px", "primaryColor": "#ffffff", "primaryBorderColor": "#ffba3a", "primaryTextColor": "#000000", "lineColor": "#6a6a6a", "edgeLabelBackground": "#fff9ed", "tertiaryColor": "#fff9ed"}, "flowchart": {"nodeSpacing": 28, "rankSpacing": 34}}}%%
+flowchart TD
+    S([App öffnen]) --> D0{Startseite<br/>geladen?}
+    D0 -->|ja| SP["Splash<br/>Erde, Echoos Aufgang, Name"]
+    D0 -->|nein, andere Adresse| START
+    SP --> D1{Einführung<br/>schon gesehen?}
+    D1 -->|nein, erster Start| OB["Onboarding<br/>6 Schritte"]
+    D1 -->|ja| START
+    OB -->|„Los geht's“ oder „Überspringen“| START["Startseite<br/>Echoo, Stimmungscheck, Spielkarten"]
+    START -->|Spielkarte antippen,<br/>Container Transform| SPIEL{Welches<br/>Spiel?}
+    SPIEL --> WS[Wolkensammeln]
+    SPIEL --> HR[Himmelsroute]
+    WS --> ERG[Ergebnis-Sheet]
+    HR --> ERG
+    ERG -->|Dashboard| START
+    ERG -->|Statistiken| STAT["Statistiken<br/>Sitzung · Verlauf · Zusammenhänge"]
+    START -->|Zusammenhänge-Karte| STAT
+    START -->|Einstellungen →<br/>„Einführung ansehen“| OB
+    START -->|Echoo antippen| SON[Sonnenschein-Screen]
+    STAT -->|Punkt antippen| SIT[Sitzung als Sheet]
+    START <-->|Tab-Leiste| STAT
+    START <-->|Tab-Leiste| GL[Glossar]
+
+    classDef entscheidung fill:#fff9ed,stroke:#ffba3a,color:#000000
+    classDef ziel fill:#ffba3a,stroke:#ffba3a,color:#000000
+    class D0,D1,SPIEL entscheidung
+    class S,START ziel

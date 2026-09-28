@@ -1,0 +1,42 @@
+%% Himmelsroute – abgeleitet aus der Zustandsmaschine src/games/himmelsroute/ablauf.ts (Phasen und durchgangsEnde) und config.ts
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Inter Variable, Inter, Arial, sans-serif", "fontSize": "14px", "primaryColor": "#ffffff", "primaryBorderColor": "#ffba3a", "primaryTextColor": "#000000", "lineColor": "#6a6a6a", "edgeLabelBackground": "#fff9ed", "tertiaryColor": "#fff9ed"}, "flowchart": {"nodeSpacing": 30, "rankSpacing": 34}}}%%
+flowchart LR
+    E([Erklärung]) --> D0{Proberunde<br/>schon gesehen?}
+    D0 -->|nein| PR["Proberunde<br/>Drachen, Rakete, Zusatz Ufo"]
+    PR -->|fertig oder „Überspringen“| PB[Proberunde beendet]
+    PB -->|Noch einmal üben| PR
+    PB -->|Weiter| PV
+    D0 -->|ja| PV[Puls vorher]
+    PV -->|Durchgang 1, Runde 1, L = 3| AG
+
+    subgraph RUNDE [Eine Runde]
+      direction TB
+      AG[Aufgang] --> AS["Aufstieg<br/>L Begegnungen"]
+      AS --> RW["Rückweg<br/>Gegenstände auf Wegpunkte legen"]
+      RW -->|Route bestätigen| AL["Auflösung<br/>Route zeichnet sich"]
+    end
+
+    AL --> D1{Route<br/>richtig?}
+    D1 -->|ja| D2{"L = 11<br/>(Maximallänge)?"}
+    D2 -->|nein| RE[Runde geschafft]
+    RE -->|nächste Runde, L + 1| AG
+    D1 -->|nein| D3{mehr als 50 %<br/>der Wegpunkte falsch?}
+    D3 -->|nein| D4{schon der<br/>zweite Versuch?}
+    D4 -->|nein| ZV["Zweiter Versuch<br/>gleiche Länge, neu gezogen"]
+    ZV --> AG
+    D2 -->|ja| DE
+    D3 -->|ja| DE
+    D4 -->|ja| DE{Durchgang endet:<br/>welcher Durchgang?}
+    DE -->|1| D1B[Durchgang 1 beendet]
+    D1B --> PA[Bewegungspause]
+    PA -->|Ich habe mich bewegt| PD[Puls danach]
+    PA -->|Ohne Bewegung fortfahren| DG2
+    PD --> DG2["Durchgang 2<br/>Runde 1, L = 3"]
+    DG2 --> AG
+    DE -->|2| ERG([Endergebnis])
+
+    classDef entscheidung fill:#fff9ed,stroke:#ffba3a,color:#000000
+    classDef ziel fill:#ffba3a,stroke:#ffba3a,color:#000000
+    class D0,D1,D2,D3,D4,DE entscheidung
+    class E,ERG ziel
+    style RUNDE fill:#ffffff,stroke:#dddddd

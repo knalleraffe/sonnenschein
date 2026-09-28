@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import { animate, useReducedMotion } from 'motion/react'
 import { zaehlen } from '../../lib/motion'
+import { useSofort } from './Erscheinen'
 
 /*
-  Zeigt eine Zahl, die beim ersten Erscheinen von 0 hochzählt
-  und bei Wertänderung von alt nach neu zählt.
+  Zeigt eine Zahl, die beim ersten Erscheinen von 0 hochzählt (800 ms,
+  mit Abbremsen) und bei Wertänderung von alt nach neu zählt.
+  Feste Ziffernbreite (tabular-nums), damit beim Zählen nichts springt.
   Bei „Bewegung reduzieren" springt sie direkt auf den Zielwert.
 */
 export default function ZaehlZahl({ wert }: { wert: number }) {
   const reduziert = useReducedMotion()
-  const [anzeige, setAnzeige] = useState(reduziert ? wert : 0)
-  const vorher = useRef(reduziert ? wert : 0)
+  const sofort = useSofort()
+  const still = reduziert || sofort
+  const [anzeige, setAnzeige] = useState(still ? wert : 0)
+  const vorher = useRef(still ? wert : 0)
 
   useEffect(() => {
     if (reduziert) {
@@ -26,5 +30,5 @@ export default function ZaehlZahl({ wert }: { wert: number }) {
     return () => animation.stop()
   }, [wert, reduziert])
 
-  return <>{anzeige}</>
+  return <span style={{ fontVariantNumeric: 'tabular-nums' }}>{anzeige}</span>
 }

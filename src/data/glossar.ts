@@ -227,16 +227,6 @@ export const glossar: GlossarEintrag[] = [
     erklaerung:
       'Die Vitalität ist ein Messwert, der den erfassten Zustand spiegelt — Sättigung, Strahlen und Leuchten der Sonne richten sich danach. Sie ist keine Belohnung und kein Punktestand: Die Sonne will nichts von dir, sie zeigt nur.',
     warum: 'So siehst du deinen Zustand auf einen Blick, ohne Zahlen lesen zu müssen.',
-    verwandt: ['serie', 'elefanten-modus', 'hasen-modus'],
-  },
-  {
-    id: 'serie',
-    begriff: 'Serie',
-    kategorie: 'In dieser App',
-    anriss: 'Tage mit Eintrag in Folge.',
-    erklaerung:
-      'Die Zahl neben der Flamme zählt, an wie vielen Tagen hintereinander du einen Eintrag gemacht hast. Sie zeigt Beständigkeit — mehr nicht. Eine Lücke ist keine Niederlage; die Zählung beginnt danach einfach neu.',
-    warum: 'Regelmäßige Einträge machen deine N=1-Auswertungen aussagekräftiger.',
-    verwandt: ['n-gleich-1', 'vitalitaet'],
+    verwandt: ['elefanten-modus', 'hasen-modus'],
   },
 ]

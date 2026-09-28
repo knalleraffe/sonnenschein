@@ -23,12 +23,37 @@
   --mode-slow: #8a6a4f;
   --mode-fast: var(--sun-deep);
 
+  /* Puls hat eine eigene Farbe — er ist keine Moduseigenschaft */
+  --pulse: #d1685e;
+
+  /* Neutrale Balkenfarbe (z. B. Trainingsfrequenz) + Fehlerarten-Töne */
+  --bar-neutral: #d9c9ad;
+  --err-omit: #b1a288;
+  --err-react: #6f6252;
+
+  /* Spiel Wolkensammeln: Himmel und Wolkenzustände (Referenz: Spiel-1-Screens) */
+  --himmel-blau-oben: #aadcf3;
+  --himmel-blau-unten: #edf9fd;
+  --himmel-hell-oben: #d6ece2;
+  --himmel-hell: #f8e3b4;
+  --wolke-leuchten: #fce0a8;
+  --spiel-richtig: #5bb85c;
+  --spiel-richtig-hell: #eaf7ea;
+  --spiel-falsch: #e8483f;
+  --spiel-falsch-hell: #fdecef;
+
   /* Radien */
   --radius-card: 28px;
   --radius-pill: 999px;
 
   /* Schatten */
   --shadow-card: 0 2px 12px rgba(180, 120, 20, 0.08);
+  --shadow-overlay: 0 18px 48px rgba(94, 74, 42, 0.18);
+  --overlay-surface: rgba(255, 253, 248, 0.92);
+  --overlay-border: rgba(255, 255, 255, 0.78);
+  --sheet-primary-start: #ffca67;
+  --sheet-primary-end: #ffba3a;
+  --sheet-secondary: #f2f2f2;
 
   /* Verläufe (im Screenshot nachgemessen) */
   --grad-header: linear-gradient(180deg, #fff8e1 0%, #fbe3ad 45%, #f6c364 100%);
